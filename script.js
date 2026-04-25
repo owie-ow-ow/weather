@@ -117,7 +117,7 @@ async function getSearchResults(q) {
 }
 
 async function mapCode(code, daytimeStatus) {
-    raw = await fetch('/codeMap.json')
+    raw = await fetch('codeMap.json')
     json = await raw.json()
 
     if (daytimeStatus == 'night') { daytimeStatus = 'night' } else { daytimeStatus = 'day' }
