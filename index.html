@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <dialog id="locatingMessage" class="transparent modal" closedby="any">
+        <p>Please wait while you are located.</p>
+        <p>You may need to allow location services.</p>
+        <p>If this doesn't continue, close this message and search for a location manually.</p>
+    </dialog>
+    <div class="transparent menubar squarecorners">
+        <div>
+            <input type="checkbox" name="transparencyToggle" id="transparencyToggle" checked="false">
+            <label for="transparencyToggle">Transparency</label>
+        </div>
+        <div class="transparent squarecorners searchbar" onkeypress="if ((event && event.keyCode == 13) || event == 0) {getSearchResults(event)}">
+            <input type="text" name="searchbar" id="searchbar" placeholder="Search for a location..."
+                class="transparent squarecorners">
+            <input type="button" value="Search" class="transparent squarecorners" id="searchsubmit" />
+        </div>
+        <dialog class="transparent modal" id="searchmodal" closedby="any">h</dialog>
+    </div>
+    <div class="current transparent" id="current">
+        <h1 id="locNameTxt"></h1>
+        <img id="wIcon">
+        <h1 id="tempText"></h1>
+        <div class="row"></div>
+        <h1 id="wDesc"></h1>
+        <div class="row"></div>
+        <div class="subcard transparent">
+            <div id="hourlyHeader">
+                <h3 id="asOfText"></h3>
+            </div>
+            <hr>
+            <div id="hourlycard"></div>
+        </div>
+    </div>
+    <dialog id="resultsModal" class="transparent modal" closedby="any"></dialog>
+    <script src="script.js"></script>
+</body>
+
+</html>
