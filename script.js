@@ -142,7 +142,7 @@ async function getWeather(lat, lon) {
     icon = current['urlIcon']
     desc = current['cap']
 
-    if (current['daytime'] == 'd') { daytime = 'night' } else { daytime = 'day' } // check daytime field or whatever
+    if (current['daytime'] == 'd') { daytime = 'day' } else { daytime = 'night' } // check daytime field or whatever
     weather_code = current['icon']
 
     locName = json['value'][0]['responses'][0]['source']['location']['Name']
