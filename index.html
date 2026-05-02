@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>Weather</title>
-    <link rel="stylesheet" href="styles.css">
+    <link id="styleSheet" rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -19,7 +19,8 @@
             <input type="checkbox" name="transparencyToggle" id="transparencyToggle" checked="false">
             <label for="transparencyToggle">Transparency</label>
         </div>
-        <div class="transparent squarecorners searchbar" onkeypress="if ((event && event.keyCode == 13) || event == 0) {getSearchResults(event)}">
+        <div class="transparent squarecorners searchbar"
+            onkeypress="if ((event && event.keyCode == 13) || event == 0) {getSearchResults(event)}">
             <input type="text" name="searchbar" id="searchbar" placeholder="Search for a location..."
                 class="transparent squarecorners">
             <input type="button" value="Search" class="transparent squarecorners" id="searchsubmit" />
@@ -38,7 +39,14 @@
                 <h3 id="asOfText"></h3>
             </div>
             <hr>
-            <div id="hourlycard"></div>
+            <div id="hourlyCard" class="card"></div>
+        </div>
+        <div class="subcard transparent" style="margin-top: 10px;">
+            <div id="cardHeader">
+                <h3 id="asOfTextDaily"></h3>
+            </div>
+            <hr>
+            <div id="dailyCard" class="card"></div>
         </div>
     </div>
     <dialog id="resultsModal" class="transparent modal" closedby="any"></dialog>
