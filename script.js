@@ -1,5 +1,4 @@
 var tempText = document.getElementById('tempText')
-var wIcon = document.getElementById('wIcon')
 var wDesc = document.getElementById('wDesc')
 var transparencyToggle = document.getElementById('transparencyToggle')
 var searchBox = document.getElementById('searchbar')
@@ -11,11 +10,15 @@ var locatingMessage = document.getElementById('locatingMessage')
 
 const styleSheet = document.getElementById('styleSheet')
 
-const currentWeatherBase = "https://api.msn.com/weatherfalcon/weather/current?apikey=j5i4gDqHL6nGYwx5wi5kRhXjtf2c5qgFX9fzfk0TOo&activityId=69c11dee-40e6-4888-94da-3a88be97002d&cm=en-us&it=web&user=m-2361EA89BB366C582EEFFDADBA956D7F&scn=ANON&locale=en-us&units=F&appId=9e21380c-ff19-4c78-b4ea-19558e93a5d3&wrapOData=true"
-const search = "https://www.bing.com/api/v6/Places/AutoSuggest?appid=EDEC3CB74CF190BBBE26DF7938F3D961E925F593&types=Place&count=10&structuredaddress=true&strucaddrread=1&q="
-const hourlyWeatherBase = "https://api.msn.com/weather/hourlyforecast?apiKey=j5i4gDqHL6nGYwx5wi5kRhXjtf2c5qgFX9fzfk0TOo&appid=9e21380c-ff19-4c78-b4ea-19558e93a5d3&cm=en-US&locale=en&units=F&days=12"
+const currentWeatherBase = "https://api.open-meteo.com/v1/forecast?current=temperature_2m,weather_code,is_day&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch"
+const search = "https://geocoding-api.open-meteo.com/v1/search?count=10&language=en&format=json&name="
+const hourlyWeatherBase = "https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,weather_code,is_day&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch"
+const dailyWeatherBase = "https://api.open-meteo.com/v1/forecast?daily=weather_code,temperature_2m_mean&forecast_days=7&wind_speed_unit=mph&temperature_unit=fahrenheit"
 var lat = undefined
 var lon = undefined
+
+var descMap = undefined
+var bgMap = undefined
 
 locatingMessage.showModal()
 
@@ -62,7 +65,7 @@ function populateLocations(results) {
         button.classList.add('transparent')
 
         button.onclick = () => {
-            clearAll(); getWeather(split[0], split[1])
+            clearAll(); getWeather(split[0], split[1], formatName(split[2], split[3]).split('(')[0])
         }
         button.textContent = formatName(split[2], split[3])
 
@@ -96,16 +99,17 @@ async function getSearchResults(q) {
     r = await fetch(search + searchBox.value)
     json = await r.json()
 
-    var places = await json['value'], len = places !== null ? places.length : 0, i = 0;
+    var places = await json['results'], len = places !== null ? places.length : 0, i = 0;
 
     for (i; i < len; i++) {
-        lat = places[i]['geo']['latitude']
-        lon = places[i]['geo']['longitude']
-        locationName = places[i]['address']['text']
+        lat = places[i]['latitude']
+        lon = places[i]['longitude']
+        locationName = `${places[i]['name']}, ${places[i]['admin1']} (${places[i]['country']})`
         formatted = `${lat},${lon},${locationName}`
 
         locations.push(formatted)
     }
+
 
     if (locations.length == 0) {
         alert("No locations found :(")
@@ -114,19 +118,25 @@ async function getSearchResults(q) {
         searchResultsModal.showModal()
     }
     populateLocations(locations)
-
 }
 
 async function mapCode(code, daytimeStatus) {
-    raw = await fetch('codeMap.json')
-    json = await raw.json()
-
-    if (daytimeStatus == 'night') { daytimeStatus = 'night' } else { daytimeStatus = 'day' }
-    return json[daytimeStatus][code]
+    return bgMap[daytimeStatus][code]
 }
 
-async function getWeather(lat, lon) {
-    response = await fetch(currentWeatherBase + `&lat=${lat}&lon=${lon}`)
+async function mapDesc(code, daytimeStatus) {
+    return descMap[code][daytimeStatus]['description']
+}
+
+async function getWeather(lat, lon, nameOverride = null) {
+    if (!descMap) {
+        descMap = await (await fetch('descMap.json')).json()
+    }
+    if (!bgMap) {
+        bgMap = await (await fetch('codeMap.json')).json()
+    }
+
+    response = await fetch(currentWeatherBase + `&latitude=${lat}&longitude=${lon}`)
 
     rspStatus = await response.status
     json = await response.json()
@@ -137,19 +147,22 @@ async function getWeather(lat, lon) {
         return
     }
 
-    current = json['value']['0']['responses']['0']['weather']['0']['current']
+    current = json['current']
+    weather_code = current['weather_code']
 
-    temp = `${Math.round(current['temp'])}${json['value']['0']['units']['temperature']}`
-    icon = current['urlIcon']
-    desc = current['cap']
+    if (current['is_day'] == '1') { daytime = 'day' } else { daytime = 'night' } // check daytime field or whatever
 
-    if (current['daytime'] == 'd') { daytime = 'day' } else { daytime = 'night' } // check daytime field or whatever
-    weather_code = current['icon']
+    temp = `${Math.round(current['temperature_2m'])}${json['current_units']['temperature_2m']}`
+    desc = await mapDesc(weather_code, daytime)
 
-    locName = json['value'][0]['responses'][0]['source']['location']['Name']
+    if (!nameOverride) {
+        locName = "Current Location"
+    }
+    else {
+        locName = nameOverride
+    }
 
     tempText.textContent = temp
-    wIcon.src = icon
     wDesc.textContent = desc
     nameText.textContent = locName
 
@@ -166,45 +179,46 @@ async function getWeather(lat, lon) {
 
 function clearAll() {
     tempText.textContent = ""
-    wIcon.src = ""
     wDesc.textContent = ""
     nameText.textContent = ""
 }
 
 async function getHourlyWeather(lat, lon) {
-    response = await fetch(hourlyWeatherBase + `&lat=${lat}&lon=${lon}`)
+    response = await fetch(hourlyWeatherBase + `&latitude=${lat}&longitude=${lon}`)
     json = await response.json()
 
-    current = json['value'][0]['responses'][0]['weather'][0]['days'][0]['hourly'].forEach(element => {
-        card = document.getElementById('hourlyCard')
+    const tempUnit = json['hourly_units']['temperature_2m']
 
+    let temps = Object.values(json['hourly']['temperature_2m']);
+    let times = Object.values(json['hourly']['time']);
+    let codes = Object.values(json['hourly']['weather_code']);
+    let isDays = Object.values(json['hourly']['is_day']);
+
+    for (let i = 0; i < temps.length; i++) {
+        const temp = temps[i];
+        const time = times[i];
+        const code = codes[i];
+        const isDay = codes[i];
+        if (isDay == '1') { daytime = 'day' } else { daytime = 'night' } // check daytime field or whatever again
+
+        card = document.getElementById('hourlyCard')
         container = document.createElement('div')
 
-        var stamp = element['valid'];
-
-        var now = new Date().toLocaleString(navigator.language, { hour: '2-digit', minute: '2-digit', hour12: true });
-
-        document.getElementById('asOfText').textContent = "Hourly weather as of " + now;
-
-        img = element['urlIcon']
-        cap = element['cap']
-
-        var capElement = document.createElement('p')
-        capElement.textContent = cap
+        var capElement = document.createElement('h3')
+        capElement.textContent = await mapDesc(code, daytime)
 
         var tempText = document.createElement('p')
         tempText.classList.add('cardTemp')
-        tempText.textContent = `${element['temp']}${json['value'][0]['units']['temperature']}`
+        tempText.textContent = `${Math.round(temp)}${tempUnit}`
         container.appendChild(tempText)
 
         var hourElement = document.createElement('h6')
         hourElement.classList.add('cardText')
-        hourElement.textContent = fmtDate(new Date(stamp))
+        hourElement.textContent = fmtTime(new Date(time))
 
-        var imgElement = document.createElement('img')
-        imgElement.src = img
+        var now = new Date().toLocaleString(navigator.language, { hour: '2-digit', minute: '2-digit', hour12: true });
+        document.getElementById('asOfText').textContent = "Hourly weather as of " + now;
 
-        container.appendChild(imgElement)
         container.appendChild(capElement)
         tempText.appendChild(hourElement)
 
@@ -212,70 +226,58 @@ async function getHourlyWeather(lat, lon) {
         container.classList.add('border')
 
         card.appendChild(container)
-    });
+    }
 }
 
 async function getDailyWeather(lat, lon) {
-    response = await fetch(hourlyWeatherBase + `&lat=${lat}&lon=${lon}`)
+    response = await fetch(dailyWeatherBase + `&latitude=${lat}&longitude=${lon}`)
     json = await response.json()
 
-    var card = document.getElementById('dailyCard')
-    current = json['value'][0]['responses'][0]['weather'][0]['days'].forEach(element => {
-        let curHour = element['hourly'][0]
-        console.log(curHour)
+    console.log(json)
 
+    const tempUnit = json['daily_units']['temperature_2m_mean']
+
+    let temps = Object.values(json['daily']['temperature_2m_mean']);
+    let times = Object.values(json['daily']['time']);
+    let codes = Object.values(json['daily']['weather_code']);
+
+    for (let i = 0; i < temps.length; i++) {
+        const temp = temps[i];
+        const time = times[i];
+        const code = codes[i];
+        card = document.getElementById('dailyCard')
         container = document.createElement('div')
 
-        var stamp = curHour['valid'];
+        var capElement = document.createElement('h3')
+        capElement.textContent = await mapDesc(code, daytime)
 
-        var now = new Date().getTime() + 24 * 60 * 60 * 1000
-
-        document.getElementById('asOfTextDaily').textContent = "Daily weather as of " + new Date().toLocaleString(navigator.language, { "weekday": "long" });
-        
-        img = curHour['urlIcon']
-        cap = curHour['cap']
-        summary = curHour['summary']
-        
-        var capElement = document.createElement('p')
-        capElement.textContent = cap
         var tempText = document.createElement('p')
         tempText.classList.add('cardTemp')
-        tempText.textContent = `${curHour['temp']}${json['value'][0]['units']['temperature']}`
+        tempText.textContent = `${Math.round(temp)}${tempUnit}`
         container.appendChild(tempText)
 
         var dayElement = document.createElement('h6')
         dayElement.classList.add('cardText')
-        if (new Date().getDate() == new Date(stamp).getDate()) {
-            dayElement.textContent = 'Today'
-        }
-        else {
-            dayElement.textContent = new Date(stamp).toLocaleString(navigator.language, { "weekday": "long" })
-        }
+        console.log(time)
+        dayElement.textContent = time
 
-        var dateElement = document.createElement('h6')
-        dateElement.classList.add('cardText')
-        dateElement.textContent = new Date(stamp).toLocaleString(navigator.language, { "dateStyle": "long" })
+        var now = new Date().toLocaleString(navigator.language, { weekday: "long" });
+        document.getElementById('asOfTextDaily').textContent = "Daily weather as of " + now;
 
-        var imgElement = document.createElement('img')
-        imgElement.src = img
-
-        container.appendChild(imgElement)
         container.appendChild(capElement)
         tempText.appendChild(dayElement)
-        tempText.appendChild(dateElement)
 
         container.classList.add('subCardItem')
         container.classList.add('border')
 
-        console.log(container)
-
         card.appendChild(container)
-    });
+    }
 }
 
-function fmtDate(date) {
+function fmtTime(date) {
     return date.toLocaleString(navigator.language, { hour: 'numeric', hour12: true })
 }
+
 
 navigator.geolocation.getCurrentPosition(async (position) => {
     clearAll()
