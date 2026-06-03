@@ -2,281 +2,281 @@
     "0": {
         "day": {
             "description": "Sunny",
-            "image": "/icons/Sunny.png"
+            "image": "/weather/icons/Sunny.png"
         },
         "night": {
             "description": "Clear",
-            "image": "/icons/Clear.png"
+            "image": "/weather/icons/Clear.png"
         }
     },
     "1": {
         "day": {
             "description": "Mainly Sunny",
-            "image": "/icons/MostlySunny.png"
+            "image": "/weather/icons/MostlySunny.png"
         },
         "night": {
             "description": "Mainly Clear",
-            "image": "/icons/MostlyClear.png"
+            "image": "/weather/icons/MostlyClear.png"
         }
     },
     "2": {
         "day": {
             "description": "Partly Cloudy",
-            "image": "/icons/MostlySunny.png"
+            "image": "/weather/icons/MostlySunny.png"
         },
         "night": {
             "description": "Partly Cloudy",
-            "image": "/icons/MostlyClear.png"
+            "image": "/weather/icons/MostlyClear.png"
         }
     },
     "3": {
         "day": {
             "description": "Cloudy",
-            "image": "/icons/Cloudy.png"
+            "image": "/weather/icons/Cloudy.png"
         },
         "night": {
             "description": "Cloudy",
-            "image": "/icons/Cloudy.png"
+            "image": "/weather/icons/Cloudy.png"
         }
     },
     "45": {
         "day": {
             "description": "Foggy",
-            "image": "/icons/Foggy.png"
+            "image": "/weather/icons/Foggy.png"
         },
         "night": {
             "description": "Foggy",
-            "image": "/icons/Foggy.png"
+            "image": "/weather/icons/Foggy.png"
         }
     },
     "48": {
         "day": {
             "description": "Rime Fog",
-            "image": "/icons/Foggy.png"
+            "image": "/weather/icons/Foggy.png"
         },
         "night": {
             "description": "Rime Fog",
-            "image": "/icons/Foggy.png"
+            "image": "/weather/icons/Foggy.png"
         }
     },
     "51": {
         "day": {
             "description": "Light Drizzle",
-            "image": "/icons/LightRainDay.png"
+            "image": "/weather/icons/LightRainDay.png"
         },
         "night": {
             "description": "Light Drizzle",
-            "image": "/icons/LightRainNight.png"
+            "image": "/weather/icons/LightRainNight.png"
         }
     },
     "53": {
         "day": {
             "description": "Drizzle",
-            "image": "/icons/LightRainDay.png"
+            "image": "/weather/icons/LightRainDay.png"
         },
         "night": {
             "description": "Drizzle",
-            "image": "/icons/LightRainNight.png"
+            "image": "/weather/icons/LightRainNight.png"
         }
     },
     "55": {
         "day": {
             "description": "Heavy Drizzle",
-            "image": "/icons/HeavyDrizzle.png"
+            "image": "/weather/icons/HeavyDrizzle.png"
         },
         "night": {
             "description": "Heavy Drizzle",
-            "image": "/icons/HeavyDrizzle.png"
+            "image": "/weather/icons/HeavyDrizzle.png"
         }
     },
     "56": {
         "day": {
             "description": "Light Freezing Drizzle",
-            "image": "/icons/LightRainDay.png"
+            "image": "/weather/icons/LightRainDay.png"
         },
         "night": {
             "description": "Light Freezing Drizzle",
-            "image": "/icons/LightRainNight.png"
+            "image": "/weather/icons/LightRainNight.png"
         }
     },
     "57": {
         "day": {
             "description": "Freezing Drizzle",
-            "image": "/icons/LightRainDay.png"
+            "image": "/weather/icons/LightRainDay.png"
         },
         "night": {
             "description": "Freezing Drizzle",
-            "image": "/icons/LightRainNight.png"
+            "image": "/weather/icons/LightRainNight.png"
         }
     },
     "61": {
         "day": {
             "description": "Light Rain",
-            "image": "/icons/LightRainDay.png"
+            "image": "/weather/icons/LightRainDay.png"
         },
         "night": {
             "description": "Light Rain",
-            "image": "/icons/LightRainNight.png"
+            "image": "/weather/icons/LightRainNight.png"
         }
     },
     "63": {
         "day": {
             "description": "Rain",
-            "image": "/icons/Rain.png"
+            "image": "/weather/icons/Rain.png"
         },
         "night": {
             "description": "Rain",
-            "image": "/icons/Rain.png"
+            "image": "/weather/icons/Rain.png"
         }
     },
     "65": {
         "day": {
             "description": "Heavy Rain",
-            "image": "/icons/HeavyRain.png"
+            "image": "/weather/icons/HeavyRain.png"
         },
         "night": {
             "description": "Heavy Rain",
-            "image": "/icons/HeavyRain.png"
+            "image": "/weather/icons/HeavyRain.png"
         }
     },
     "66": {
         "day": {
             "description": "Light Freezing Rain",
-            "image": "/icons/Rain.png"
+            "image": "/weather/icons/Rain.png"
         },
         "night": {
             "description": "Light Freezing Rain",
-            "image": "/icons/Rain.png"
+            "image": "/weather/icons/Rain.png"
         }
     },
     "67": {
         "day": {
             "description": "Freezing Rain",
-            "image": "/icons/Rain.png"
+            "image": "/weather/icons/Rain.png"
         },
         "night": {
             "description": "Freezing Rain",
-            "image": "/icons/Rain.png"
+            "image": "/weather/icons/Rain.png"
         }
     },
     "71": {
         "day": {
             "description": "Light Snow",
-            "image": "/icons/LightSnow.png"
+            "image": "/weather/icons/LightSnow.png"
         },
         "night": {
             "description": "Light Snow",
-            "image": "/icons/LightSnow.png"
+            "image": "/weather/icons/LightSnow.png"
         }
     },
     "73": {
         "day": {
             "description": "Snow",
-            "image": "/icons/Snow.png"
+            "image": "/weather/icons/Snow.png"
         },
         "night": {
             "description": "Snow",
-            "image": "/icons/Snow.png"
+            "image": "/weather/icons/Snow.png"
         }
     },
     "75": {
         "day": {
             "description": "Heavy Snow",
-            "image": "/icons/HeavySnow.png"
+            "image": "/weather/icons/HeavySnow.png"
         },
         "night": {
             "description": "Heavy Snow",
-            "image": "/icons/HeavySnow.png"
+            "image": "/weather/icons/HeavySnow.png"
         }
     },
     "77": {
         "day": {
             "description": "Snow Grains",
-            "image": "/icons/LightSnow.png"
+            "image": "/weather/icons/LightSnow.png"
         },
         "night": {
             "description": "Snow Grains",
-            "image": "/icons/LightSnow.png"
+            "image": "/weather/icons/LightSnow.png"
         }
     },
     "80": {
         "day": {
             "description": "Light Showers",
-            "image": "/icons/LightRainDay.png"
+            "image": "/weather/icons/LightRainDay.png"
         },
         "night": {
             "description": "Light Showers",
-            "image": "/icons/LightRainNight.png"
+            "image": "/weather/icons/LightRainNight.png"
         }
     },
     "81": {
         "day": {
             "description": "Showers",
-            "image": "/icons/LightRainDay.png"
+            "image": "/weather/icons/LightRainDay.png"
         },
         "night": {
             "description": "Showers",
-            "image": "/icons/LightRainNight.png"
+            "image": "/weather/icons/LightRainNight.png"
         }
     },
     "82": {
         "day": {
             "description": "Heavy Showers",
-            "image": "/icons/HeavyRain.png"
+            "image": "/weather/icons/HeavyRain.png"
         },
         "night": {
             "description": "Heavy Showers",
-            "image": "/icons/HeavyRain.png"
+            "image": "/weather/icons/HeavyRain.png"
         }
     },
     "85": {
         "day": {
             "description": "Light Snow Showers",
-            "image": "/icons/LightSnow.png"
+            "image": "/weather/icons/LightSnow.png"
         },
         "night": {
             "description": "Light Snow Showers",
-            "image": "/icons/LightSnow.png"
+            "image": "/weather/icons/LightSnow.png"
         }
     },
     "86": {
         "day": {
             "description": "Snow Showers",
-            "image": "/icons/SnowShowers.png"
+            "image": "/weather/icons/SnowShowers.png"
         },
         "night": {
             "description": "Snow Showers",
-            "image": "/icons/SnowShowers.png"
+            "image": "/weather/icons/SnowShowers.png"
         }
     },
     "95": {
         "day": {
             "description": "Thunderstorm",
-            "image": "/icons/Thunder.png"
+            "image": "/weather/icons/Thunder.png"
         },
         "night": {
             "description": "Thunderstorm",
-            "image": "/icons/Thunder.png"
+            "image": "/weather/icons/Thunder.png"
         }
     },
     "96": {
         "day": {
             "description": "Light Thunderstorms With Hail",
-            "image": "/icons/Thunder.png"
+            "image": "/weather/icons/Thunder.png"
         },
         "night": {
             "description": "Light Thunderstorms With Hail",
-            "image": "/icons/Thunder.png"
+            "image": "/weather/icons/Thunder.png"
         }
     },
     "99": {
         "day": {
             "description": "Thunderstorm With Hail",
-            "image": "/icons/Thunder.png"
+            "image": "/weather/icons/Thunder.png"
         },
         "night": {
             "description": "Thunderstorm With Hail",
-            "image": "/icons/Thunder.png"
+            "image": "/weather/icons/Thunder.png"
         }
     }
 }
