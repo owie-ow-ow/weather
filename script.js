@@ -1,5 +1,6 @@
 var tempText = document.getElementById('tempText')
 var wDesc = document.getElementById('wDesc')
+var wIcon = document.getElementById('wIcon')
 var transparencyToggle = document.getElementById('transparencyToggle')
 var searchBox = document.getElementById('searchbar')
 var searchModal = document.getElementById('searchmodal')
@@ -124,6 +125,10 @@ async function mapCode(code, daytimeStatus) {
     return bgMap[daytimeStatus][code]
 }
 
+async function mapIcon(code, daytimeStatus) {
+    return descMap[code][daytimeStatus]['image']
+}
+
 async function mapDesc(code, daytimeStatus) {
     return descMap[code][daytimeStatus]['description']
 }
@@ -154,6 +159,8 @@ async function getWeather(lat, lon, nameOverride = null) {
 
     temp = `${Math.round(current['temperature_2m'])}${json['current_units']['temperature_2m']}`
     desc = await mapDesc(weather_code, daytime)
+    icon = await mapIcon(weather_code, daytime)
+    console.log(icon)
 
     if (!nameOverride) {
         locName = "Current Location"
@@ -164,9 +171,11 @@ async function getWeather(lat, lon, nameOverride = null) {
 
     tempText.textContent = temp
     wDesc.textContent = desc
+    wIcon.src = icon
     nameText.textContent = locName
 
     document.body.style.backgroundImage = `url(backgrounds/${await mapCode(weather_code, daytime)}.jpg)`
+    document.body.style.backgroundSize = "cover"
 
     var items = document.getElementsByClassName('subCardItem'), len = items !== null ? items.length : 0, i = 0;
 
@@ -219,6 +228,12 @@ async function getHourlyWeather(lat, lon) {
         var now = new Date().toLocaleString(navigator.language, { hour: '2-digit', minute: '2-digit', hour12: true });
         document.getElementById('asOfText').textContent = "Hourly weather as of " + now;
 
+        var img = document.createElement('img')
+        img.src = await mapIcon(code, daytime)
+        img.id = "wIcon"
+
+        container.appendChild(img)
+
         container.appendChild(capElement)
         tempText.appendChild(hourElement)
 
@@ -263,6 +278,12 @@ async function getDailyWeather(lat, lon) {
 
         var now = new Date().toLocaleString(navigator.language, { weekday: "long" });
         document.getElementById('asOfTextDaily').textContent = "Daily weather as of " + now;
+
+        var img = document.createElement('img')
+        img.src = await mapIcon(code, daytime)
+        img.id = "wIcon"
+
+        container.appendChild(img)
 
         container.appendChild(capElement)
         tempText.appendChild(dayElement)

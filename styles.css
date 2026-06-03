@@ -2,9 +2,6 @@
 
     body {
         margin: 0px;
-        background-position: center;
-        background-repeat: no-repeat;
-        background: black;
     }
 
     .noTransparency {
@@ -150,9 +147,6 @@
     }
 
     .current img {
-        max-width: 50px;
-        max-height: 50px;
-
         align-self: center;
         margin-right: 10px;
     }
@@ -179,7 +173,7 @@
     body {
         margin: 0px;
         background-position: center;
-        background-repeat: no-repeat;
+        background-size: cover;
         background: #ffffff;
     }
 
@@ -314,7 +308,7 @@
         height: 75px;
 
         background-color: rgba(220, 220, 220, 0.582);
-        border-color: #ffffff6e;
+        border-color: #545454;
     }
 
     @media (max-width: 1024px) {
@@ -355,4 +349,14 @@
         /* no times new roman please :) */
         font-family: Calibri, 'Trebuchet MS', sans-serif, 'Comic Sans MS'
     }
+}
+
+#wIcon {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.disclaimer {
+    color: white;
+    text-align: center;
 }
