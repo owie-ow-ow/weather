@@ -126,6 +126,7 @@ async function mapCode(code, daytimeStatus) {
 }
 
 async function mapIcon(code, daytimeStatus) {
+    console.log(descMap[code][daytimeStatus])
     return descMap[code][daytimeStatus]['image']
 }
 
@@ -141,16 +142,24 @@ async function getWeather(lat, lon, nameOverride = null) {
         bgMap = await (await fetch('codeMap.json')).json()
     }
 
-    response = await fetch(currentWeatherBase + `&latitude=${lat}&longitude=${lon}`)
-
-    rspStatus = await response.status
-    json = await response.json()
-
-    if (rspStatus != 200) {
-        alert(`Response status does not indicate success (${rspStatus})
-            \n${json['responses']['0']['error']['code']} (${json['responses']['0']['error']['desc']})`)
-        return
+    try {
+        var response = await fetch(currentWeatherBase + `&latitude=${lat}&longitude=${lon}`, { signal: AbortSignal.timeout(10000) });
+    } catch (error) {
+        console.log(error)
+        if (error.name === 'TimeoutError') {
+            alert('The request took too long.\nThe service may be temporarily unavailable.');
+        }
     }
+
+    if (response.status == 429) {
+        alert('There has been too many requests from your network at this time.\nTry again later.')
+    }
+    else if (!response.ok) {
+        alert('A network error occurred! ', httpStatus, response.statusText);
+    }
+
+
+    json = await response.json()
 
     current = json['current']
     weather_code = current['weather_code']
@@ -209,6 +218,7 @@ async function getHourlyWeather(lat, lon) {
         const code = codes[i];
         const isDay = codes[i];
         if (isDay == '1') { daytime = 'day' } else { daytime = 'night' } // check daytime field or whatever again
+        console.log(daytime)
 
         card = document.getElementById('hourlyCard')
         container = document.createElement('div')
