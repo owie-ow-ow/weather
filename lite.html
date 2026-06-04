@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>Weather</title>
-    <link id="styleSheet" rel="stylesheet" href="styles.css">
+    <link id="styleSheet" rel="stylesheet" href="styles.lite.css">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 </head>
 
@@ -16,11 +16,11 @@
         <p>If this doesn't continue, close this message and search for a location manually.</p>
     </dialog>
     <div class="transparent menubar squarecorners">
-        <div>
+        <div style="display: none;">
             <input type="checkbox" name="transparencyToggle" id="transparencyToggle" checked="false">
-            <label for="transparencyToggle">Toggle transparency</label>
-
-            <a href="/weather/lite.html">or go to the lite page</a>.
+            <label for="transparencyToggle">Transparency</label>
+        </div>
+        <div>
         </div>
         <div class="transparent squarecorners searchbar"
             onkeypress="if ((event && event.keyCode == 13) || event == 0) {getSearchResults(event)}">

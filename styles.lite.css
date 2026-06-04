@@ -5,7 +5,7 @@
     }
 
     .noTransparency {
-        background-color: #000000f4 !important;
+        background-color: #000000 !important;
         border: 2px solid #444444f4 !important;
     }
 
@@ -65,9 +65,7 @@
     }
 
     .transparent {
-        background-color: #0f0f0f2c;
-        backdrop-filter: blur(5px);
-
+        background-color: #0f0f0f;
         border: 2px solid #4444447b;
         border-radius: 15px;
     }
@@ -127,7 +125,7 @@
         text-align: center;
         margin: 5px;
 
-        background-color: #0000002c !important;
+        background-color: #000000 !important;
 
         height: 75px;
     }
@@ -240,8 +238,7 @@
     }
 
     .transparent {
-        background-color: #ffffff2c;
-        backdrop-filter: blur(5px);
+        background-color: #ffffff;
 
         border: 2px solid #dfdfdf7b;
         border-radius: 15px;
@@ -303,11 +300,11 @@
         text-align: center;
         margin: 5px;
 
-        background-color: #FFFFFF00 !important;
+        background-color: #FFFFFF !important;
 
         height: 75px;
 
-        background-color: rgba(220, 220, 220, 0.582);
+        background-color: rgb(220, 220, 220);
         border-color: #545454;
     }
 
